@@ -1,0 +1,19 @@
+n = int(input())
+arr = list(map(int, input().split()))
+k = int(input())
+
+comparisons = 0
+found = -1
+
+for i in range(n):
+    comparisons += 1
+    if arr[i] == k:
+        found = i
+        break
+
+if found != -1:
+    print(f"Found at index {found}")
+else:
+    print("Not Found")
+
+print(f"Comparisons = {comparisons}")
