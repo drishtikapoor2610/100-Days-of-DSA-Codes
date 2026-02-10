@@ -14,3 +14,12 @@ int main() {
     while (left < right) {
         if (s[left] != s[right]) {
             printf("NO");
+            return 0;
+        }
+        left++;
+        right--;
+    }
+
+    printf("YES");
+    return 0;
+}
