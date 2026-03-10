@@ -1,0 +1,133 @@
+#include <stdio.h>
+#define MAX 100
+
+int deque[MAX];
+int front = -1;
+int rear = -1;
+
+/* Insert at front */
+void push_front(int x)
+{
+    if(front == 0)
+    {
+        printf("Deque Overflow\n");
+    }
+    else if(front == -1 && rear == -1)
+    {
+        front = rear = 0;
+        deque[front] = x;
+    }
+    else
+    {
+        front--;
+        deque[front] = x;
+    }
+}
+
+/* Insert at rear */
+void push_back(int x)
+{
+    if(rear == MAX-1)
+    {
+        printf("Deque Overflow\n");
+    }
+    else if(front == -1 && rear == -1)
+    {
+        front = rear = 0;
+        deque[rear] = x;
+    }
+    else
+    {
+        rear++;
+        deque[rear] = x;
+    }
+}
+
+/* Delete from front */
+void pop_front()
+{
+    if(front == -1)
+    {
+        printf("Deque Underflow\n");
+    }
+    else if(front == rear)
+    {
+        front = rear = -1;
+    }
+    else
+    {
+        front++;
+    }
+}
+
+/* Delete from rear */
+void pop_back()
+{
+    if(rear == -1)
+    {
+        printf("Deque Underflow\n");
+    }
+    else if(front == rear)
+    {
+        front = rear = -1;
+    }
+    else
+    {
+        rear--;
+    }
+}
+
+/* Get front element */
+void get_front()
+{
+    if(front == -1)
+        printf("Deque Empty\n");
+    else
+        printf("Front element: %d\n", deque[front]);
+}
+
+/* Get rear element */
+void get_back()
+{
+    if(rear == -1)
+        printf("Deque Empty\n");
+    else
+        printf("Rear element: %d\n", deque[rear]);
+}
+
+/* Display deque */
+void display()
+{
+    if(front == -1)
+    {
+        printf("Deque Empty\n");
+        return;
+    }
+
+    printf("Deque elements: ");
+    for(int i = front; i <= rear; i++)
+        printf("%d ", deque[i]);
+
+    printf("\n");
+}
+
+/* Main function */
+int main()
+{
+    push_back(10);
+    push_back(20);
+    push_front(5);
+    push_front(2);
+
+    display();
+
+    pop_front();
+    pop_back();
+
+    display();
+
+    get_front();
+    get_back();
+
+    return 0;
+}
