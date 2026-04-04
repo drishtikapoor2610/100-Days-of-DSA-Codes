@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+#define MAX 100
+
+int main() {
+    int n, m;
+
+    printf("Enter number of vertices: ");
+    scanf("%d", &n);
+
+    int adj[MAX][MAX]; // for storing list
+
+    // Initialize with -1 (empty)
+    for(int i = 0; i < n; i++)
+        for(int j = 0; j < n; j++)
+            adj[i][j] = -1;
+
+    printf("Enter number of edges: ");
+    scanf("%d", &m);
+
+    int count[MAX] = {0}; // tracks number of neighbors
+
+    printf("Enter edges (u v):\n");
+    for(int i = 0; i < m; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+
+        adj[u][count[u]++] = v;
+        adj[v][count[v]++] = u; // remove for directed graph
+    }
+
+    // Print adjacency list
+    printf("\nAdjacency List:\n");
+    for(int i = 0; i < n; i++) {
+        printf("%d -> ", i);
+        for(int j = 0; j < count[i]; j++) {
+            printf("%d ", adj[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
