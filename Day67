@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define MAX 2000
+
+int graph[MAX][MAX];
+int visited[MAX];
+int recStack[MAX];
+int stack[MAX], top = -1;
+
+bool dfs(int v, int n) {
+    visited[v] = 1;
+    recStack[v] = 1;
+
+    for(int i = 0; i < n; i++) {
+        if(graph[v][i]) {
+            if(!visited[i] && dfs(i, n))
+                return true;
+            else if(recStack[i])
+                return true;
+        }
+    }
+
+    recStack[v] = 0;
+    stack[++top] = v;
+    return false;
+}
+
+int* findOrder(int numCourses, int** prerequisites, int prerequisitesSize, int* returnSize) {
+
+    // Initialize
+    for(int i = 0; i < numCourses; i++) {
+        visited[i] = recStack[i] = 0;
+        for(int j = 0; j < numCourses; j++)
+            graph[i][j] = 0;
+    }
+
+    // Build graph
+    for(int i = 0; i < prerequisitesSize; i++) {
+        int a = prerequisites[i][0];
+        int b = prerequisites[i][1];
+        graph[b][a] = 1;
+    }
+
+    // DFS
+    for(int i = 0; i < numCourses; i++) {
+        if(!visited[i]) {
+            if(dfs(i, numCourses)) {
+                *returnSize = 0;
+                return NULL;  // cycle
+            }
+        }
+    }
+
+    // Build result
+    int* result = (int*)malloc(numCourses * sizeof(int));
+    int i = 0;
+
+    while(top != -1) {
+        result[i++] = stack[top--];
+    }
+
+    *returnSize = numCourses;
+    return result;
+}
