@@ -1,0 +1,75 @@
+#include <stdio.h>
+#define SIZE 7
+
+int hashTable[SIZE];
+
+// Initialize table
+void init() {
+    for(int i = 0; i < SIZE; i++) {
+        hashTable[i] = -1;
+    }
+}
+
+// Hash function
+int hash(int key) {
+    return key % SIZE;
+}
+
+// Insert using quadratic probing
+void insert(int key) {
+    int index = hash(key);
+
+    for(int i = 0; i < SIZE; i++) {
+        int newIndex = (index + i*i) % SIZE;
+
+        if(hashTable[newIndex] == -1) {
+            hashTable[newIndex] = key;
+            return;
+        }
+    }
+
+    printf("Hash Table Overflow\n");
+}
+
+// Search element
+void search(int key) {
+    int index = hash(key);
+
+    for(int i = 0; i < SIZE; i++) {
+        int newIndex = (index + i*i) % SIZE;
+
+        if(hashTable[newIndex] == key) {
+            printf("FOUND\n");
+            return;
+        }
+
+        if(hashTable[newIndex] == -1) {
+            break;
+        }
+    }
+
+    printf("NOT FOUND\n");
+}
+
+// Driver code
+int main() {
+    int n;
+    char op[10];
+    int value;
+
+    init();
+
+    scanf("%d", &n);
+
+    for(int i = 0; i < n; i++) {
+        scanf("%s %d", op, &value);
+
+        if(op[0] == 'I') {
+            insert(value);
+        } else if(op[0] == 'S') {
+            search(value);
+        }
+    }
+
+    return 0;
+}
